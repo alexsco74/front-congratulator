@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header card-header-warning">
+    <h4 class="card-title">Список задач</h4>
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table table-hover">
+      <thead class="text-warning">
+      <th>#</th>
+      <th>Название</th>
+      <th>Категория</th>
+      <th>Приоритет</th>
+      <th>Дата</th>
+      <th>Статус</th>
+      </thead>
+      <tbody>
+      <tr [class.task-is-complete]="task.isComplete"
+          *ngFor="let task of tasks; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ task.title }}</td>
+        <td [class.unknow-value]="isEmptyProperty('category', task)">
+          {{ getPropertyEntityTitle('category', task) }}
+        </td>
+        <td [class.unknow-value]="isEmptyProperty('priority', task)">
+          {{ getPropertyEntityTitle('priority', task) }}
+        </td>
+        <td [class.unknow-value]="isEmptyProperty('date', task)">
+          {{ task.date ? (task.date | date : 'short') : 'Нет даты' }}
+        </td>
+        <td>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input"
+                     (click)="toggleTaskCompleted(task)"
+                     type="checkbox"
+                     [checked]="task.isComplete">
+              <span class="form-check-sign">
+                <span class="check"></span>
+              </span>
+            </label>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

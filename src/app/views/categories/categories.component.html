@@ -1,0 +1,20 @@
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      Категории
+    </a>
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="nav-item"
+          *ngFor="let category of categories"
+          (click)="getTasksByCategory(category)"
+          [class.active]="category === selectedCategory">
+        <a class="nav-link" href="#">
+          <span>{{category.title}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
