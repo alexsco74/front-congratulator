@@ -1,37 +1,37 @@
 import {Injectable} from '@angular/core';
-import {Category} from "../models/Category";
-import {TestData} from "../data/TestData";
-import {Task} from '../models/Task';
-import {BehaviorSubject, Subject} from "rxjs";
+import {Category} from '../models/Category';
+import {TestData} from '../data/TestData';
+import {Contact} from '../models/Contact';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataHandlerService {
 
-  // Сохдает объект потока
-  tasksSubject = new BehaviorSubject<Task[]>(TestData.tasks);
+  // Создает объект потока
+  contactsSubject = new BehaviorSubject<Contact[]>(TestData.contacts);
   categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
 
   constructor() {
   }
 
-  fillCategories() {
+  fillCategories(): void {
 
     // Передаем категории в поток
     this.categoriesSubject.next(TestData.categories);
   }
 
-  fillTasks(): void {
+  fillContacts(): void {
 
     // Передаем задачи в поток
-    this.tasksSubject.next(TestData.tasks);
+    this.contactsSubject.next(TestData.contacts);
   }
 
-  fillTasksByCategory(category: Category): void {
+  fillContactsByCategory(category: Category): void {
 
     // Передаем задачи по категории в поток
-    const tasks = TestData.tasks.filter(task => task.category === category);
-    this.tasksSubject.next(tasks);
+    const contacts = TestData.contacts.filter(contact => contact.category === category);
+    this.contactsSubject.next(contacts);
   }
 }

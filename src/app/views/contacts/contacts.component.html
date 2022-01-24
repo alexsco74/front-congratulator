@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header card-header-warning">
+    <h4 class="card-title">Контакты</h4>
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table table-hover">
+      <thead class="text-warning">
+      <th>#</th>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Отчество</th>
+      <th>День рождения</th>
+      <th>Категория</th>
+      <th>Фото</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contact of contacts; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{contact.lastName}}</td>
+        <td>{{contact.firstName}}</td>
+        <td>{{contact.middleName }}</td>
+        <td>{{contact.birthday | date : 'dd-MM-Y'}}</td>
+        <td [class.unknow-value]="isEmptyProperty('category', contact)">
+          {{getPropertyEntityName('category', contact)}}
+        </td>
+        <td *ngIf="contact.photo"><img [src]="contact.photo"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
