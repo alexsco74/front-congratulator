@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact} from 'src/app/models/Contact';
-import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-contacts',
@@ -10,11 +9,11 @@ import {DataHandlerService} from '../../services/data-handler.service';
 export class ContactsComponent implements OnInit {
   contacts: Contact[];
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.dataHandler.contactsSubject.subscribe(contacts => this.contacts = contacts);
+    // this.dataHandler.contactsSubject.subscribe(contacts => this.contacts = contacts);
   }
 
   getPropertyEntityName(propertyName: string, contact: Contact): string {

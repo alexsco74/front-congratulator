@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHandlerService} from '../../services/data-handler.service';
 import {Category} from '../../models/Category';
 
 @Component({
@@ -12,16 +11,16 @@ export class CategoriesComponent implements OnInit {
   categories: Category[];
   selectedCategory: Category;
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
+    // this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
   }
 
   getContactsByCategory(category: Category): void {
     this.selectedCategory = category;
-    this.dataHandler.fillContactsByCategory(category);
+    // this.dataHandler.fillContactsByCategory(category);
   }
 
 }

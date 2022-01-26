@@ -12,6 +12,9 @@ export interface CommonDAO<T> {
   // Обновить объект
   update(obj: T): Observable<T>;
 
+  // Удалить объект
+  delete(id: number): Observable<T>;
+
   // Добавить объект
   add(obj: T): Observable<T>;
 }
