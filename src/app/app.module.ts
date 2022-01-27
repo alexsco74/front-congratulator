@@ -26,7 +26,7 @@ import {CONTACT_URL_TOKEN} from './data/dao/impl/contact.service';
     },
     {
       provide: CONTACT_URL_TOKEN,
-      useValue: 'http://localhost:8080/conatct'
+      useValue: 'http://localhost:8080/contact'
     }
   ],
   bootstrap: [AppComponent]

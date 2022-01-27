@@ -23,7 +23,7 @@
         <td [class.unknow-value]="isEmptyProperty('category', contact)">
           {{getPropertyEntityName('category', contact)}}
         </td>
-        <td *ngIf="contact.photo"><img [src]="contact.photo"></td>
+        <td><img [src]="contact.photo"></td>
       </tr>
       </tbody>
     </table>

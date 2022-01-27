@@ -25,7 +25,7 @@ export class ContactService extends CommonService<Contact> implements ContactDAO
   }
 
   // Найти ближайшие дни рождения
-  findUpcomingBirthdays(upcomingBirthdaysParams: UpcomingBirthdaysParams): Observable<Contact[]> {
-    return this.contactHttpClient.post<Contact[]>(this.contactUrl + '/search', upcomingBirthdaysParams);
+  findUpcomingBirthdays(upcomingBirthdaysParams: UpcomingBirthdaysParams): Observable<any> {
+    return this.contactHttpClient.post<any>(this.contactUrl + '/upcoming-birthdays', upcomingBirthdaysParams);
   }
 }

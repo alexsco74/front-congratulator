@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Category} from '../../models/Category';
 
 @Component({
@@ -7,6 +7,11 @@ import {Category} from '../../models/Category';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
+
+  @Input('categories')
+  set setCategories(categories: Category[]) {
+    this.categories = categories;
+  }
 
   categories: Category[];
   selectedCategory: Category;

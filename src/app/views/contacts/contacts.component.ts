@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from 'src/app/models/Contact';
+import {Category} from '../../models/Category';
 
 @Component({
   selector: 'app-contacts',
@@ -8,6 +9,11 @@ import {Contact} from 'src/app/models/Contact';
 })
 export class ContactsComponent implements OnInit {
   contacts: Contact[];
+
+  @Input('contacts')
+  set setContacts(contacts: Contact[]) {
+    this.contacts = contacts;
+  }
 
   constructor() {
   }
