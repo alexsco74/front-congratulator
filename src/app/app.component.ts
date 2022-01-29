@@ -41,4 +41,27 @@ export class AppComponent implements OnInit {
       this.contacts = result.content;
     });
   }
+
+  // Добавить категорию
+  addCategory(category: Category): void {
+    this.categoryService.add(category).subscribe(
+      (result) => {
+        this.fillAllCategories();
+      }
+    );
+  }
+
+  // Удалить категорию
+  deleteCategory(category: Category): void {
+    this.categoryService.delete(category.id).subscribe(() => {
+      this.fillAllCategories();
+    });
+  }
+
+  // Изменить категорию
+  updateCategory(category: Category): void {
+    this.categoryService.update(category).subscribe(() => {
+      this.fillAllCategories();
+    });
+  }
 }

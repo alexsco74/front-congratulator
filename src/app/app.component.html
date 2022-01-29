@@ -1,5 +1,8 @@
 <div class="wrapper">
   <app-categories
+    (addCategory)="addCategory($event)"
+    (deleteCategory)="deleteCategory($event)"
+    (updateCategory)="updateCategory($event)"
     [categories]="categories">
   </app-categories>
   <div class="main-panel">

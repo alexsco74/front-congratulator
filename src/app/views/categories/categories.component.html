@@ -1,18 +1,31 @@
-<div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
-  <div class="logo">
-    <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-      Поздравлятор
-    </a>
+<div class="sidebar" data-color="purple" data-background-color="white">
+  <div class="categories-component__title">
+    <span href="/">
+      Категории
+    </span>
+    <span class="add-icon-area">
+      <button mat-icon-button (click)="openAddDialog()" class="add-icon">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="nav-item"
-          *ngFor="let category of categories"
+      <li class="nav-item categories-component__nav-item"
+          *ngFor="let category of categories, let index = index"
           (click)="getContactsByCategory(category)"
-          [class.active]="category === selectedCategory">
+          [class.active]="category === selectedCategory"
+          (mouseleave)="showEditIcon(false, index)"
+          (mouseenter)="showEditIcon(true, index)">
         <a class="nav-link" href="#">
           <span>{{category.name}}</span>
         </a>
+        <span class="categories-component__edit-category">
+           <mat-icon *ngIf="index == indexMouseMove || isMobile"
+             (click)="$event.stopPropagation(); openEditDialog(category)"
+             class="edit-category-icon">edit
+           </mat-icon>
+        </span>
       </li>
     </ul>
   </div>
