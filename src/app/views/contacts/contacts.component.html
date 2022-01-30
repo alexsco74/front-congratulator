@@ -1,7 +1,15 @@
 <div class="card">
   <div class="card-header card-header-warning">
-    <h4 class="card-title">Контакты</h4>
+    <span>Контакты</span>
+    <span class="add-icon-area">
+      <button mat-icon-button
+              class="add-icon add-contacts"
+              (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
   </div>
+
   <div *ngIf="contacts && contacts.length > 0"
        class="card-body table-responsive">
     <table class="table table-hover">

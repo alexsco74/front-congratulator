@@ -1,0 +1,96 @@
+<mat-dialog-content>
+  <p mat-dialog-title>{{dialogTitle}}</p>
+  <!-- Фамилия -->
+  <mat-form-field>
+    <mat-label>Фамилия (обязательно)</mat-label>
+    <input #inputLastName
+           matInput
+           [(ngModel)]="newLastName">
+    <button *ngIf="newLastName?.trim().length > 0"
+            mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="newLastName= ''" class="dialog-toto-title">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <!-- Имя -->
+  <mat-form-field>
+    <mat-label>Имя (обязательно)</mat-label>
+    <input #inputFirstName
+           matInput
+           [(ngModel)]="newFirstName">
+    <button *ngIf="newFirstName?.trim().length > 0"
+            mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="newFirstName= ''" class="dialog-toto-title">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <!-- Отчество -->
+  <mat-form-field>
+    <mat-label>Отчество (обязательно)</mat-label>
+    <input #inputMiddleName
+           matInput
+           [(ngModel)]="newMiddleName">
+    <button *ngIf="newMiddleName?.trim().length > 0"
+            mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="newMiddleName= ''" class="dialog-toto-title">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <!-- выпадающий список категорий-->
+  <mat-form-field>
+    <mat-label>Укажите категорию</mat-label>
+    <!-- если задача завершена - контрол не будет доступен -->
+    <mat-select [(ngModel)]="newCategoryId">
+      <mat-option [value]="null">Без категории</mat-option>
+      <mat-option *ngFor="let cat of categories" [value]="cat.id">
+        {{cat.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- день рождения -->
+  <mat-form-field>
+    <input matInput
+           placeholder="Укажите день рождения"
+           #inputBirthday
+           readonly="true"
+           [matDatepicker]="picker"
+           [(ngModel)]="newBirthday"
+           (click)="picker.open()">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <!-- иконка календаря (для открытия календаря) -->
+    <mat-datepicker #picker></mat-datepicker>
+    <!--кнопка очистки даты -->
+    <button *ngIf="inputBirthday.value.trim().length > 0"
+            mat-button matSuffix mat-icon-button aria-label="Clear"
+            (click)="newBirthday = null" class="calendar-clear-icon">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="gap20"></div>
+</mat-dialog-content>
+<!--  кнопки возможных действий-->
+<mat-dialog-actions>
+  <div class="col-md-5 col-12" [ngClass]="{'text-center': isMobile, 'text-left': !isMobile}">
+    <button
+      mat-raised-button color="primary"
+      (click)="confirm()"
+      [disabled]="inputLastName.value.trim().length==0 ||
+      inputFirstName.value.trim().length==0 ||
+      inputMiddleName.value.trim().length==0 ||
+      inputBirthday.value.trim().length == 0">
+      Сохранить
+    </button>
+    <button mat-raised-button (click)="cancel()">Отмена</button>
+  </div>
+  <div class="col-md-7 col-12 text-right"
+       *ngIf="canDelete"
+       [ngClass]="{'text-center': isMobile, 'text-right': !isMobile}">
+    <button
+      mat-button
+      *ngIf="canDelete"
+      class="red"
+      (click)="delete()">
+      Удалить задачу
+    </button>
+  </div>
+</mat-dialog-actions>

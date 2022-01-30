@@ -16,6 +16,10 @@ import {ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.co
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { EditContactDialogComponent } from './dialog/edit-contact-dialog/edit-contact-dialog.component';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -24,19 +28,24 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ContactsComponent,
     EditCategoryDialogComponent,
     ConfirmDialogComponent,
+    EditContactDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatIconModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        FormsModule,
-        MatButtonModule,
-        MatInputModule,
-        MatPaginatorModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
   providers: [
     {
       provide: CATEGORY_URL_TOKEN,
