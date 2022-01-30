@@ -33,6 +33,10 @@ export class CategoriesComponent implements OnInit {
   @Output()
   updateCategory = new EventEmitter<Category>();
 
+  // Выбор категории
+  @Output()
+  selectCategory = new EventEmitter<Category>();
+
   categories: Category[];
   selectedCategory: Category;
 
@@ -47,7 +51,7 @@ export class CategoriesComponent implements OnInit {
 
   getContactsByCategory(category: Category): void {
     this.selectedCategory = category;
-    // this.dataHandler.fillContactsByCategory(category);
+    this.selectCategory.emit(category);
   }
 
   openAddDialog(): void {

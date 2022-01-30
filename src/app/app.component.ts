@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'congratulator';
   categories: Category[];
   contacts: Contact[];
-  selectedCategories: Category = null;
+  selectedCategory: Category = null;
 
   constructor(private categoryService: CategoryService,
               private contactService: ContactService) {
@@ -37,6 +37,8 @@ export class AppComponent implements OnInit {
   fillAllContacts(): void {
     const upcomingBirthdaysParams = new UpcomingBirthdaysParams();
     upcomingBirthdaysParams.fromDate = (new Date()).toISOString().substring(0, 10);
+    upcomingBirthdaysParams.categoryId = this.selectedCategory ? this.selectedCategory.id : null;
+
     this.contactService.findUpcomingBirthdays(upcomingBirthdaysParams).subscribe(result => {
       this.contacts = result.content;
     });
@@ -63,5 +65,11 @@ export class AppComponent implements OnInit {
     this.categoryService.update(category).subscribe(() => {
       this.fillAllCategories();
     });
+  }
+
+  // Выбрать категорию
+  selectCategory(category: Category): void {
+    this.selectedCategory = category;
+    this.fillAllContacts();
   }
 }
