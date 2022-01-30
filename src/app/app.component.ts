@@ -4,6 +4,7 @@ import {CategoryService} from './data/dao/impl/category.service';
 import {Contact} from './models/Contact';
 import {ContactService} from './data/dao/impl/contact.service';
 import {UpcomingBirthdaysParams} from './data/dao/request/UpcomingBirthdaysParams';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,8 @@ export class AppComponent implements OnInit {
   categories: Category[];
   contacts: Contact[];
   selectedCategory: Category = null;
+  upcomingBirthdaysParams = new UpcomingBirthdaysParams();
+  contactsPageCount: number;
 
   constructor(private categoryService: CategoryService,
               private contactService: ContactService) {
@@ -35,11 +38,10 @@ export class AppComponent implements OnInit {
 
   // Заполнить контакты
   fillAllContacts(): void {
-    const upcomingBirthdaysParams = new UpcomingBirthdaysParams();
-    upcomingBirthdaysParams.fromDate = (new Date()).toISOString().substring(0, 10);
-    upcomingBirthdaysParams.categoryId = this.selectedCategory ? this.selectedCategory.id : null;
+    this.upcomingBirthdaysParams.fromDate = (new Date()).toISOString().substring(0, 10);
 
-    this.contactService.findUpcomingBirthdays(upcomingBirthdaysParams).subscribe(result => {
+    this.contactService.findUpcomingBirthdays(this.upcomingBirthdaysParams).subscribe(result => {
+      this.contactsPageCount = result.totalElements;
       this.contacts = result.content;
     });
   }
@@ -69,7 +71,22 @@ export class AppComponent implements OnInit {
 
   // Выбрать категорию
   selectCategory(category: Category): void {
+    this.upcomingBirthdaysParams.pageIndex = 0;
     this.selectedCategory = category;
+    this.upcomingBirthdaysParams.categoryId = this.selectedCategory ? this.selectedCategory.id : null;
+    this.fillAllContacts();
+  }
+
+  initPageParams(pageEvent: PageEvent): void {
+
+    if (this.upcomingBirthdaysParams.pageSize !== pageEvent.pageSize) {
+      this.upcomingBirthdaysParams.pageIndex = 0;
+    } else {
+      this.upcomingBirthdaysParams.pageIndex = pageEvent.pageIndex;
+    }
+
+    this.upcomingBirthdaysParams.pageSize = pageEvent.pageSize;
+
     this.fillAllContacts();
   }
 }

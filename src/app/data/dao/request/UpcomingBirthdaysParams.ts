@@ -4,5 +4,5 @@ export class UpcomingBirthdaysParams {
   fromDate = '';
   categoryId = null;
   pageIndex = 0;
-  pageSize = 2;
+  pageSize = 5;
 }

@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
       <div class="container-fluid">
         <div class="navbar-wrapper">
-          <a class="navbar-brand" href="javascript:void(0)">Поздравлятор</a>
+          <a class="navbar-brand" href="/">Поздравлятор</a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,10 @@
         <div class="row">
           <div class="col-lg-12 col-md-12">
             <app-contacts
-              [contacts]="contacts">
+              [contacts]="contacts"
+              [upcomingBirthdaysParams]="upcomingBirthdaysParams"
+              [contactsPageCount]="contactsPageCount"
+              (paging)="initPageParams($event)">
             </app-contacts>
           </div>
         </div>
@@ -91,11 +94,6 @@
       <div class="container-fluid">
         <nav class="float-left">
           <ul>
-            <li>
-              <a href="https://www.creative-tim.com">
-                Creative Tim
-              </a>
-            </li>
             <li>
               <a href="https://creative-tim.com/presentation">
                 About Us
@@ -118,8 +116,7 @@
           <script>
             document.write(new Date().getFullYear())
           </script>
-          , made with <i class="material-icons">favorite</i> by
-          <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+          , made with <i class="material-icons">favorite</i>
         </div>
       </div>
     </footer>

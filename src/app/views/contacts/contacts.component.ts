@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Contact} from 'src/app/models/Contact';
-import {Category} from '../../models/Category';
+import {UpcomingBirthdaysParams} from '../../data/dao/request/UpcomingBirthdaysParams';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contacts',
@@ -9,12 +10,23 @@ import {Category} from '../../models/Category';
 })
 export class ContactsComponent implements OnInit {
   contacts: Contact[];
+  upcomingBirthdaysParams: UpcomingBirthdaysParams;
 
   @Input('contacts')
   set setContacts(contacts: Contact[]) {
     this.contacts = contacts;
   }
 
+  @Input('upcomingBirthdaysParams')
+  set setUpcomingBirthdaysParams(upcomingBirthdaysParams: UpcomingBirthdaysParams) {
+    this.upcomingBirthdaysParams = upcomingBirthdaysParams;
+  }
+
+  @Input()
+  contactsPageCount: number;
+
+  @Output()
+  paging = new EventEmitter<PageEvent>();
   constructor() {
   }
 
@@ -28,5 +40,9 @@ export class ContactsComponent implements OnInit {
 
   isEmptyProperty(propertyName, contact: Contact): boolean {
     return !contact[propertyName];
+  }
+
+  pageChanged(pageEvent: PageEvent): void {
+    this.paging.emit(pageEvent);
   }
 }

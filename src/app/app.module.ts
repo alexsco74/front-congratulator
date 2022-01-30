@@ -15,6 +15,7 @@ import {FormsModule} from '@angular/forms';
 import {ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -24,17 +25,18 @@ import {MatInputModule} from '@angular/material/input';
     EditCategoryDialogComponent,
     ConfirmDialogComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatButtonModule,
-    MatInputModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatButtonModule,
+        MatInputModule,
+        MatPaginatorModule
+    ],
   providers: [
     {
       provide: CATEGORY_URL_TOKEN,
