@@ -90,9 +90,24 @@ export class AppComponent implements OnInit {
     this.fillAllContacts();
   }
 
-  // добавление контакта
+  // Добавить контакт
   addContact(contact: Contact): void {
     this.contactService.add(contact).subscribe(result => {
+      this.fillAllContacts();
+    });
+  }
+
+  // Удалить контакт
+  deleteContact(contact: Contact): void {
+
+    this.contactService.delete(contact.id).subscribe(() => {
+      this.fillAllContacts();
+    });
+  }
+
+  // Обновить контакт
+  updateContact(contact: Contact): void {
+    this.contactService.update(contact).subscribe(() => {
       this.fillAllContacts();
     });
   }

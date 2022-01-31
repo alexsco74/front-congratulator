@@ -4,3 +4,27 @@
 .add-contacts {
   margin: 0 .5rem;
 }
+
+.contacts-components__contact-actions {
+  text-align: right;
+}
+
+.contacts-components__delete-icon {
+  cursor: pointer;
+  color: red;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.contacts-components__edit-icon {
+  cursor: pointer;
+  color: darkgreen;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.contacts-components__photo img{
+  max-width: 16px;
+}

@@ -6,6 +6,7 @@ import {Category} from '../../models/Category';
 import {MatDialog} from '@angular/material/dialog';
 import {EditContactDialogComponent} from '../../dialog/edit-contact-dialog/edit-contact-dialog.component';
 import {DialogAction} from '../../object/DialogResult';
+import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-contacts',
@@ -40,11 +41,19 @@ export class ContactsComponent implements OnInit {
 
   @Output()
   paging = new EventEmitter<PageEvent>();
-  constructor(private dialog: MatDialog) {
-  }
 
   @Output()
   addContact = new EventEmitter<Contact>();
+
+  @Output()
+  deleteContact = new EventEmitter<Contact>();
+
+  @Output()
+  updateContact = new EventEmitter<Contact>();
+
+  constructor(private dialog: MatDialog) {
+  }
+
 
   ngOnInit(): void {
     // this.dataHandler.contactsSubject.subscribe(contacts => this.contacts = contacts);
@@ -80,5 +89,52 @@ export class ContactsComponent implements OnInit {
       }
     });
 
+  }
+
+  openDeleteDialog(contact: Contact): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Подтвердите действие',
+        message: `Вы действительно хотите удалить контакт: "${contact.lastName} ${contact.firstName}"?`
+      },
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (!(result)) {
+        return;
+      }
+
+      if (result.action === DialogAction.OK) {
+        this.deleteContact.emit(contact);
+      }
+    });
+  }
+
+  openEditDialog(contact: Contact): void {
+
+    const dialogRef = this.dialog.open(EditContactDialogComponent, {
+      data: [contact, 'Редактирование контакта', this.categories],
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (!(result)) {
+        return;
+      }
+
+      if (result.action === DialogAction.DELETE) {
+        this.deleteContact.emit(contact);
+        return;
+      }
+
+      if (result.action === DialogAction.SAVE) {
+        this.updateContact.emit(contact);
+        return;
+      }
+    });
   }
 }

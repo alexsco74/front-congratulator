@@ -21,6 +21,7 @@
       <th>День рождения</th>
       <th>Категория</th>
       <th>Фото</th>
+      <th><!-- Действия --></th>
       </thead>
       <tbody>
       <tr *ngFor="let contact of contacts; let i = index">
@@ -32,7 +33,19 @@
         <td [class.unknow-value]="isEmptyProperty('category', contact)">
           {{getPropertyEntityName('category', contact)}}
         </td>
-        <td><img [src]="contact.photo"></td>
+        <td class="contacts-components__photo"><img [src]="contact.photo || 'assets/img/people.svg'"></td>
+        <td class="contacts-components__contact-actions">
+          <button mat-icon-button
+                  (click)="openDeleteDialog(contact)"
+                  class="contacts-components__delete-icon">
+            <mat-icon aria-hidden="false">delete</mat-icon>
+          </button>
+          <button mat-icon-button
+                  (click)="openEditDialog(contact)"
+                  class="contacts-components__edit-icon edit-icon">
+            <mat-icon aria-hidden="false">edit</mat-icon>
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>
