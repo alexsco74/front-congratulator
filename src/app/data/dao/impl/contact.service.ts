@@ -28,4 +28,10 @@ export class ContactService extends CommonService<Contact> implements ContactDAO
   findUpcomingBirthdays(upcomingBirthdaysParams: UpcomingBirthdaysParams): Observable<any> {
     return this.contactHttpClient.post<any>(this.contactUrl + '/upcoming-birthdays', upcomingBirthdaysParams);
   }
+
+  // Загрузить файл на сервер
+  uploadFile(formData: any): Observable<any> {
+    return this.contactHttpClient.post<any>(this.contactUrl + '/api/files', formData);
+  }
+
 }

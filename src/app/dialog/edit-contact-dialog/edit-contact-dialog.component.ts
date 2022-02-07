@@ -5,6 +5,8 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {DialogAction, DialogResult} from '../../object/DialogResult';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {ContactService} from '../../data/dao/impl/contact.service';
+import {FileService} from '../../services/file/file.service';
 
 @Component({
   selector: 'app-edit-contact-dialog',
@@ -12,14 +14,24 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
   styleUrls: ['./edit-contact-dialog.component.scss']
 })
 export class EditContactDialogComponent implements OnInit {
+  // @ViewChild('fileInput') fileInput: ElementRef;
+
+  isDropOver: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<EditContactDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: [Contact, string, Category[]],
     private dialog: MatDialog,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private contactService: ContactService,
+    private fileService: FileService
   ) {
+    const headers = [{
+      name: 'Accept',
+      value: 'application/json'
+    }];
   }
+
 
   // коллекции получаем из главной страницы (через параметры диалог. окна), чтобы здесь заново не делать запрос в БД
   categories: Category[];
@@ -36,6 +48,9 @@ export class EditContactDialogComponent implements OnInit {
 
   newCategoryId: number;
   newBirthday: Date;
+
+  newPhoto: string;
+  newPhotoSrc: string;
 
   // старый id категории тоже сохраняем, чтобы иметь возможность знать,
   // какая была до этого категория (нужно для правильного обновления счетчиков)
@@ -67,8 +82,18 @@ export class EditContactDialogComponent implements OnInit {
       this.newBirthday = new Date(this.contact.birthday);
     }
 
+    this.newPhoto = this.contact.photo;
+    this.newPhotoSrc = this.fileService.getUrl(this.contact.photo);
 
   }
+
+  fileOverAnother(e: any): void {
+    this.isDropOver = e;
+  }
+
+  // onClickFile(): void {
+  //   this.fileInput.nativeElement.click();
+  // }
 
   // нажали ОК
   confirm(): void {
@@ -78,14 +103,15 @@ export class EditContactDialogComponent implements OnInit {
     this.contact.middleName = this.newMiddleName;
     this.contact.category = this.findCategoryById(this.newCategoryId);
 
+
     if (!this.newBirthday) {
       this.contact.birthday = null;
     } else {
       // в поле дата хранится в текущей timezone, в БД дата автоматически сохранится в формате UTC
       this.contact.birthday = this.newBirthday;
     }
+    this.contact.photo = this.newPhoto;
     this.dialogRef.close(new DialogResult(DialogAction.SAVE, this.contact));
-
   }
 
   cancel(): void {
@@ -117,6 +143,18 @@ export class EditContactDialogComponent implements OnInit {
   // поиск категории по id
   private findCategoryById(tmpCategoryId: number): Category {
     return this.categories.find(t => t.id === tmpCategoryId);
+  }
+
+  onFileChange(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      this.contactService.uploadFile(formData).subscribe((result) => {
+        this.newPhoto = result.path;
+        this.newPhotoSrc = this.fileService.getUrl(result.path);
+      });
+    }
   }
 
 }

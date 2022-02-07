@@ -33,7 +33,7 @@
         <td [class.unknow-value]="isEmptyProperty('category', contact)">
           {{getPropertyEntityName('category', contact)}}
         </td>
-        <td class="contacts-components__photo"><img [src]="contact.photo || 'assets/img/people.svg'"></td>
+        <td class="contacts-components__photo"><img [src]="getContactPhotoUrl(contact)"></td>
         <td class="contacts-components__contact-actions">
           <button mat-icon-button
                   (click)="openDeleteDialog(contact)"

@@ -66,11 +66,20 @@
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
+  <!-- Фото -->
+  <label class="edit-contact-dialog__title">Фото</label>
+  <input #newPhotoInput
+         type="file"
+         (change)="onFileChange($event)">
+  <img *ngIf="newPhotoSrc"
+       class="edit-contact-dialog__photo-preview"
+       [src]="newPhotoSrc"/>
   <div class="gap20"></div>
 </mat-dialog-content>
 <!--  кнопки возможных действий-->
 <mat-dialog-actions>
-  <div class="col-md-5 col-12" [ngClass]="{'text-center': isMobile, 'text-left': !isMobile}">
+  <div class="col-md-5 col-12"
+       [ngClass]="{'text-center':isMobile,'text-left':!isMobile}">
     <button
       mat-raised-button color="primary"
       (click)="confirm()"
@@ -80,7 +89,9 @@
       inputBirthday.value.trim().length == 0">
       Сохранить
     </button>
-    <button mat-raised-button (click)="cancel()">Отмена</button>
+    <button mat-raised-button (click)="cancel()">
+      Отмена
+    </button>
   </div>
   <div class="col-md-7 col-12 text-right"
        *ngIf="canDelete"

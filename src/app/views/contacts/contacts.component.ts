@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {EditContactDialogComponent} from '../../dialog/edit-contact-dialog/edit-contact-dialog.component';
 import {DialogAction} from '../../object/DialogResult';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
+import {FileService} from '../../services/file/file.service';
 
 @Component({
   selector: 'app-contacts',
@@ -51,7 +52,8 @@ export class ContactsComponent implements OnInit {
   @Output()
   updateContact = new EventEmitter<Contact>();
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,
+              private fileService: FileService) {
   }
 
 
@@ -136,5 +138,9 @@ export class ContactsComponent implements OnInit {
         return;
       }
     });
+  }
+
+  getContactPhotoUrl(contact: Contact): string {
+    return !contact.photo ? 'assets/img/people.svg' : this.fileService.getUrl(contact.photo);
   }
 }
